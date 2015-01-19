@@ -1,3 +1,5 @@
+#Object Oriented Javascript
+###Denny Scott
 Let's talk about Object Oriented Javascript. As with everything in Javascript, there is many ways to architect Object Orienteation. The following is my best practice. It's the collective sum of opinons between different developers at my workplace, and the general approach to keep things simple, and allow testing.
 
 ##What is Object Oriented Javascript
