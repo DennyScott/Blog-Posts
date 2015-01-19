@@ -38,8 +38,8 @@ Lets start at the basics. In Object Orientation, our first step is to split logi
         friendDoesTax();
         console.log("You are now broke");
     },
-    breath: function() {
-        takeBreath();
+    eat: function() {
+        console.log('you eat something');
     }
  };
  ```
@@ -62,8 +62,8 @@ var Jim = {
         payToOverseasBank();
         console.log("Still has more then Denny");
     },
-    breath: function() {
-        takeBreath();
+    eat: function() {
+        console.log('you eat something');
     }
  };
  ```
@@ -79,12 +79,14 @@ Jim.payTaxes = newTaxFunction;
 Denny.payTaxes = newTaxFunction;
 ```
 
-Furthermore, there is a lot of shared code between these types. We want a way to encapsulate this data, but also also us to share code. So lets break this down logically. We can see that we allow decleration for a class of Animal. Now, we should always attempt not to over-architect our application. At this point, lets assume that the base object we need to make for the type Mammal. I realize there could be another superclass before mammal, but lets try and keep the demo simple. So we'll create a Mammal class.
+Furthermore, there is a lot of shared code between these types. We want a way to encapsulate this data, but also also us to share code. So lets break this down logically. 
+
+Lets return to our example of coding me into your project. At the root, what am I?  Now, we should always attempt not to over-architect our application. At this point, lets assume that at my root, I am a Mammal.  So we'll create a Mammal class.
 
 ```javascript
 var Mammal = function(name) {
-    this.name = "Default";
-    this.constructor(name);
+    this.name = name;
+    eat('Milk');
 }
 
 Mammal.prototype = {
@@ -99,19 +101,69 @@ Mammal.prototype = {
 }
 ```
 
-Great, now for an explanation of what we wrote. The top mammal function is our object itself. It will be what someone calls when using your code. Inside, by habit, we place the default instance values and the call to the constructor. Our team has come to an agreement keeping the methods in the Prototype, while placing instance variables into the Object declaration. In our example, we can identifiy two types of variable exposure. Public and Privllaged. The functions in the prototype are public functions. That is, they can be called, but they do not have access to the Mammals private functions or variables. We do not have any currently, so this isn't a problem. We will look at private variables shortly.
+Great, now for an explanation of what we wrote. The top mammal function is our object itself. It will be what someone calls when using your code. Inside, by habit, we place the default instance values and the constructor. Our team has come to an agreement keeping the methods in the Prototype, while placing instance variables and initalization into the Object declaration. In our example, we can identifiy two types of variable/function exposure. Public and Privllaged. The functions in the prototype are public functions. That is, they can be called, but they do not have access to the Mammals private functions or variables. We do not have any currently, so this isn't a problem. We will look at private variables shortly.
 
-We also can see an example of a privallaged variable, which is name. It is attached to the object itself (using this.name), so we can call the variable from outside on the Mammal function. Someone with a Java or C# background might believe this to be like a protected variable, but it is not. Privlaged functions are similar to public functions in these languages, in that they can call their own objects private methods, and be called externally. Public function/variables in javascript are a little different, again, they can only call privallaged methods.
+We also can see an example of a privallaged variable, which is name. It is attached to the object itself (using this.name), so we can call the variable from outside on the Mammal function. If you come from a Java or C# background, don't mistake these naming conventions with their conventions. Privlaged functions are similar to public functions in these languages, in that they can call their own objects private methods, and be called externally. Public function/variables in javascript are a little different, again, they can only call privallaged methods.
 
-So lets see how inheritance works with this new object. Now that we have Mammal, lets build a Person class, and extend it from Mammal.
+So lets see how inheritance works with this new object. Now that we have Mammal, lets build a Person class, and extend it from Mammal. I've created a small visual guide on how we normally construct these objects.
 
+```javascript
+/**
+* Object Declaration. Includes Constructor and Instance Variables
+**/
+var Person = function(name, age, height, weight){
+    Mammal.call(this, name);
 
+    this._age = age;
+    this.height = height;
+    this.weight = weight;
+
+    Object.defineProperty(this, 'age', {
+        get: function() {
+            console.log(i'm super secret);
+            return this._age;
+        },
+            set: function(a) {
+            console.log('setting');
+            _age = a;
+        }
+    });
+}
+
+/**
+* Inheritance using Prototypes, this uses Lodash to simplify the process.
+**/
+Person.prototype = Object.create(Mammal.prototype);
+
+/**
+* Public Methods
+**/
+_.extend(Person.prototype, {
+    jump: function(height) {
+        console.log(this.name + ', who is ' + this.height + ' ft tall, jumped ' + height + ' feet.');
+    },
+
+    eat: function(food){
+        console.log("you've moved on from" + food);
+    }
+});
+```
+
+So as before, we initalize our object and set up the instance variables in the Person function. Now, we tell this new Person functions prototype to be based from Mammal.prototype. For an extended read on this process, I recommend the post at [dailyjs](http://dailyjs.com/2012/06/04/js101-object-create/). The final section, our public methods, are similar to our previous Mammal methods, except these ones must also use the original Mammal Methods. We could simply add our methods individually to Person.prototype, but I prefer this syntax It's clean, and is a great opportunity to use the Lodash library!
+
+But what about those other methods we haven't created from our inital demo. Well these variables and functions aren't necessarly something all people have. So we have a number of options. We could further extend the Person class. Perhaps only adults can pay taxes? This thought process is exactly how you should start thinking when using Object Orientation. There are many more questions on what to do with OO, and how far inheritance should go, so if your unfamiliar with the topic, I highly recommend researching it some more!
+
+Another option in Javascript is to add a single method to that object. This isn't the most recommended solution, but what if we were creating all these different people, and we decided we wanted one object to have one more function. We can simply add a function to that object, and it will only exist for that single object.
+
+Further more, if any of the objects change the prototypes function such as, that change will replicate across all objects of that type.
 
 The style we use is one that we as a team decided upon. Our early iterations of Object Oriented Javascript worked just fine, but were often confusing to new team members. They didn't have a patterend look, were messy, using public functions, private functions, and privlaged functions. Some team members were upset when they could not test private functions. Of course, this is a matter of debate itself, but we felt moving to this new system would allow team members to choose if they wanted to test private functions.
 
 ##So there are no Private Functions
 
 ##Why do you place everything into a public JSON for methods
+
+##Polymorphism in Javascript
 
 ##Testing Object Oriented Javascript
 
