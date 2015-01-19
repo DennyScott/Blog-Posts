@@ -122,7 +122,7 @@ var Person = function(name, age, height, weight){
 
     Object.defineProperty(this, 'age', {
         get: function() {
-            console.log(i'm super secret);
+            console.log("i'm super secret");
             return this._age;
         },
             set: function(a) {
