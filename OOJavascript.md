@@ -8,7 +8,7 @@ Prototype-based programming is a style of object-oriented programming in which c
 In general, we will be building a variable in Javascript, then adding Prototype functionalities to this variable. This will allow other Objects to "inherit" these functionalities. As with traditional Object-Oriented programming Languages, new objects of this variables can be made using the **new** keyword. To get a better grasp, we'll have some demos in a section further ahead. Until then, just understand that Javascript is attempting to mimic tradtional Object Orientation, but using a different prototype-based system. This syntax will also be greatly cleaned up in ECMA 6, which we will discuss further on.
 
 ##Why would I want to Use Object Orientation
-Faor those developers who may not understand why we want to use Object Orientation, Object Orientation allows us to make our code more modular. These days, web apps code and complexity has increased significantly. What was once passed off to a server, or not possible, has now been placed to the front-end of web applications. That means there is more code then ever running on a users browser while viewing our app. Furthermore, things like Node-Webkit, Cordova, or just games mean that whole applications take place on the Client End, with little to know connection to a back-end environment. 
+Faaor those developers who may not understand why we want to use Object Orientation, Object Orientation allows us to make our code more modular. These days, web apps code and complexity has increased significantly. What was once passed off to a server, or not possible, has now been placed to the front-end of web applications. That means there is more code then ever running on a users browser while viewing our app. Furthermore, things like Node-Webkit, Cordova, or just games mean that whole applications take place on the Client End, with little to know connection to a back-end environment. 
 
 As our code complexity and density increases, we have to be smarter about the ways we architect our apps. Gone are the days we simply store this data in a couple files, place it in the window namespace, and call what we need. We have to be careful about overriding other namespaces. We have larger teams, who need ot be able to work on our code, familiar architecture and standards helps integrate new team members. Now I'm not saying Object Orientation will answer all these problems, but it certainly is a step in the right direction. In fact, lets look at why my workplace moved to this style of Object Oriented javascript.
 
@@ -17,11 +17,12 @@ We had been developing a small "game", allowing simple actions like moving items
 It was a bit to late, but we decided we needed to better architect our app, and we moved to a stronger OO system. Of course, myself and the other developers come from a heavy Java and C# background, so the move was the simplest one. We searched up what some of the best approaches to Object Orientation in javascript were, and I gave the book "The Principles of Object-Oriented Javascript" by Nicholas Zakas a read. I won't go into detail about each progresive step we took, but after working on a number of apps, we came across a style of OO Javascript that we all agreed on. 
 
 Don't worry if you don't understand Object Orientation yet, we'll explain it step-by-step in the next section!
-a
+
 ##How Do I Use Object Orientation
-a
+
 Lets start at the basics. In Object Orientation, our first step is to split logical pieces of the Code into Objects. If you don't understand, lets pretend you were programming me as a person into your code. Well we could create an Object called Denny that has all my properties, as such.
 
+```javascript
  var Denny = {
     class: "Mammal",
     name: "Denny",
@@ -41,9 +42,11 @@ Lets start at the basics. In Object Orientation, our first step is to split logi
         takeBreath();
     }
  };
+ ```
 
  Great, we have some properties and functions of an Object. But what if we wanted to make another person? Well they would require us to create a whole new object manually. We'd have to make sure we place the same properties in, and that they output correct. Alright, so lets do that.
 
+```javascript
 var Jim = {
     class: "Mammal",
     name: "Jim",
@@ -63,19 +66,22 @@ var Jim = {
         takeBreath();
     }
  };
+ ```
 
 Great, but now we run into a number of issues. Lets say that we suddenly have a standard way we need to pay taxes. Now we must go into both objects and change their function for payTaxes.
 
+```javascript
 var newTaxFunction = function() {
     payToTheMan();
 }
 
 Jim.payTaxes = newTaxFunction;
 Denny.payTaxes = newTaxFunction;
+```
 
 Furthermore, there is a lot of shared code between these types. We want a way to encapsulate this data, but also also us to share code. So lets break this down logically. We can see that we allow decleration for a class of Animal. Now, we should always attempt not to over-architect our application. At this point, lets assume that the base object we need to make for the type Mammal. I realize there could be another superclass before mammal, but lets try and keep the demo simple. So we'll create a Mammal class.
 
-
+```javascript
 var Mammal = function(name) {
     this.name = "Default";
     this.constructor(name);
@@ -91,6 +97,7 @@ Mammal.prototype = {
     }
 
 }
+```
 
 Great, now for an explanation of what we wrote. The top mammal function is our object itself. It will be what someone calls when using your code. Inside, by habit, we place the default instance values and the call to the constructor. Our team has come to an agreement keeping the methods in the Prototype, while placing instance variables into the Object declaration. In our example, we can identifiy two types of variable exposure. Public and Privllaged. The functions in the prototype are public functions. That is, they can be called, but they do not have access to the Mammals private functions or variables. We do not have any currently, so this isn't a problem. We will look at private variables shortly.
 
