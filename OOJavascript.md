@@ -161,6 +161,16 @@ The style we use is one that we as a team decided upon. Our early iterations of 
 
 ##So there are no Private Functions
 
+When our team first started using Object Orientation, we made heavy use of private functions. Why wouldn't you? It's a great way to hide functions that are only intended to be used within the function itself. It helps users when their using your library, by hiding the other calls. Their were two major reasons we moved away from the use of private variables/functions.
+
+1. Performance. In most traditional Object-Oriented languages, you cannot change the method externally from the object. Therefore, you know that all objects functions are the same. The intended way to change these methods is by using inheritance and overriding these methods. Since these cannot change, these languages will often store that particular method in memory to be called by all instantions of that class.
+
+On the other hand, in javascript we can change that function at any time. Therefore, each function that an object holds is it's own spot in memory. This decreases the performance of these functions [between 10 and 90%](http://code.tutsplus.com/tutorials/stop-nesting-functions-but-not-all-of-them--net-22315). My work often focuses around HTML5 apps, and any bit of performance in this field is a big deal.
+
+If you've been following along, you may have noticed that I earlier had mentioned that changing a prototype's function on one object will propogate it to the rest. Thats great news, it means that all objects functions using a prototype will point back to a single prototype, greatly increasing performance.
+
+Thats great, but we still want to indicate to user's which functions they should not be using. To do this, we place an underscore ahead of those variables and functions. This does not stop the user from using those variables and functions, but is the general standard to indicate a private value.
+
 ##Why do you place everything into a public JSON for methods
 
 ##Polymorphism in Javascript
