@@ -109,6 +109,10 @@ We also can see an example of a privallaged variable, which is name. It is attac
 
 So lets see how inheritance works with this new object. Now that we have Mammal, lets build a Person class, and extend it from Mammal. I've created a small visual guide on how we normally construct these objects.
 
+![Layout Guide](https://github.com/DennyScott/Blog-Posts/blob/master/Layout.png)
+
+The code would look as follows:
+
 ```javascript
 /**
 * Object Declaration. Includes Constructor and Instance Variables
