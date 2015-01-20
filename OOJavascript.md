@@ -190,6 +190,7 @@ function liveBirth(mammalObject){
 ##ECMA 6
 There will be some nice syntactical sugar for Object Orientation in Javascript in the next Javascript release. For example, our Person example would look like this in ECMA 6:
 
+```javascript
 class Person extends Mammal {
     constructor(name, age, height, weight){
         super(name);
@@ -205,6 +206,8 @@ class Person extends Mammal {
         console.log(...);
     }
 }
+
+```
 
 We left out the define property, which will still be the same, but you can see how much tidier this will be. Under the hood, the same things will be happening, but will just have a cleaner look. This new ECMA6 style does not allow private functions for the same reason that we avoid private functions currently.
 
