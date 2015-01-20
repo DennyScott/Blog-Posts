@@ -175,10 +175,37 @@ When our team first started using Object Orientation, we made heavy use of priva
 
 Thats great, but we still want to indicate to user's which functions they should not be using. To do this, we place an underscore ahead of those variables and functions. This does not stop the user from using those variables and functions, but is the general standard to indicate a private value.
 
-##Why do you place everything into a public JSON for methods
-
 ##Polymorphism in Javascript
+By extended the prototype of our Object, we can also use polymorphism where necessary. Of course, since javascript is not strongly typed, there is no hard requirements on variables being passed. If we want to assure that variable is of a certain type, we can always do a type check on the passed variable, for example.
 
-##Testing Object Oriented Javascript
+```javascript
+function liveBirth(mammalObject){
+  if(mammalObject instanceof Mammal){
+    return true;
+  }
+  return false;
+}
+```
 
 ##ECMA 6
+There will be some nice syntactical sugar for Object Orientation in Javascript in the next Javascript release. For example, our Person example would look like this in ECMA 6:
+
+class Person extends Mammal {
+    constructor(name, age, height, weight){
+        super(name);
+        this.height = height;
+        this.weight = weight;
+    }
+    
+    jump(height){
+        console.log(...);
+    }
+
+    eat(food) {
+        console.log(...);
+    }
+}
+
+We left out the define property, which will still be the same, but you can see how much tidier this will be. Under the hood, the same things will be happening, but will just have a cleaner look. This new ECMA6 style does not allow private functions for the same reason that we avoid private functions currently.
+
+I hope this guide has helped you out while learning Object Oriented Javascript. As with everything in Javascript, you have many ways to do each action, so if something in here is not to you liking, do whatever works for you. The most important thing is to get your app running. Thanks!
