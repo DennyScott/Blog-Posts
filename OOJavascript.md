@@ -1,11 +1,11 @@
 #Object Oriented Javascript
 ######Denny Scott and Travis Scott
-Let's talk about Object Oriented Javascript. As with everything in Javascript, there is many ways to architect Object Orienteation. The following is my best practice. It's the collective sum of opinons between different developers at my workplace, and the general approach to keep things simple, and allow testing.
+Let's talk about Object Oriented Javascript. As with everything in Javascript, there is many ways to architect Object Orientation. The following is my best practice. It's the collective sum of opinions between different developers at my workplace, and the general approach to keep things simple, and allow testing.
 
 ##What is Object Oriented Javascript
 Javascript doesn't allow Object Orientation in the traditional sense. Rather Javascript accomplishes Object Orientation using what is known as Prototype-based programming. For a better description of prototype-based programming, we will use Mozillas definition: 
 
-Prototype-based programming is a style of object-oriented programming in which classes are not present, and behavior reuse (known as inheritance in class-based languages) is accomplished through a process of decorating existing objects which serve as prototypes. This model is also known as class-less, prototype-oriented, or instance-based programming.
+>>Prototype-based programming is a style of object-oriented programming in which classes are not present, and behavior reuse (known as inheritance in class-based languages) is accomplished through a process of decorating existing objects which serve as prototypes. This model is also known as class-less, prototype-oriented, or instance-based programming.
 
 In general, we will be building a variable in Javascript, then adding Prototype functionalities to this variable. This will allow other Objects to "inherit" these functionalities. As with traditional Object-Oriented programming Languages, new objects of this variables can be made using the **new** keyword. To get a better grasp, we'll have some demos in a section further ahead. Until then, just understand that Javascript is attempting to mimic tradtional Object Orientation, but using a different prototype-based system. This syntax will also be greatly cleaned up in ECMA 6, which we will discuss further on.
 
