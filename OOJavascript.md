@@ -111,6 +111,7 @@ So lets see how inheritance works with this new object. Now that we have Mammal,
 
 ![Layout Guide](https://github.com/DennyScott/Blog-Posts/blob/master/Posts/Layout.png)
 
+
 The code would look as follows:
 
 ```javascript
