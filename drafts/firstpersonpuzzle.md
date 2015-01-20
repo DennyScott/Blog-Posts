@@ -43,7 +43,7 @@ For ease, in the heirarchy, drag the ElevatorTrigger cube we created into the El
  
 <<Image 21>>
 
-Now go to the inspector, and right click the Mesh Renderer and remove the component.  This will essentially leave our object invisible.  Also check the box in the Box Colliser called Is Trigger so that this collider will watch for trigger enters.  We're going to be using this for our coding.  Make sure all transform attributes are as given.
+Now go to the inspector, and right click the Mesh Renderer and remove the component.  This will essentially leave our object invisible.  Also check the box in the Box Collider called Is Trigger so that this collider will watch for trigger enters.  We're going to be using this for our coding.  Make sure all transform attributes are as given.
 
 <<Image 20>>
 
