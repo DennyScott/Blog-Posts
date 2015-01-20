@@ -24,7 +24,7 @@ Now drag the First Person Controller from the Standard Assets folder into the he
 
 <<Image 9>> <<Image 12>>
 
-Next, we're going to create  a little elevator script.  I know I know, why an elevator in a puzzle game.  Well, I want to show a little bit of how moving objects look, as well as triggering an action, and I wanted the signle most ridiculous, jaw dropping, out of this world way to do so.  Unforutnatly it didn't work... so I put in an elevator.
+Next, we're going to create  a little elevator script.  I know I know, why an elevator in a puzzle game.  Well, I want to show a little bit of how moving objects look, as well as triggering an action, and I wanted the single most ridiculous, jaw dropping, out of this world way to do so.  Unforutnatly it didn't work... so I put in an elevator.
 
 Now lets create a cube quickly straight in the heirarchy and give it the following transform information.
 
