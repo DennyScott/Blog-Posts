@@ -69,4 +69,4 @@ Drag this Script on to the ElevatorTrigger button, and give the attributes the f
 
 <<Image 25>>
 
-Just remember, learning is all about failing, over and over, so don't become discouraged when things fail, or code you have written just doesn't work.  That is part of the building process, and it would be a lie to tell you that when I wrote this code for article that it worked the first time.  It didn't, but you iterate, change the idea.
+Just remember, learning is all about failing, over and over, so don't become discouraged when things fail, or code you have written just doesn't work.  That is part of the building process, and it would be a lie to tell you that when I wrote this code for article that it worked the first time.  It didn't, but you iterate, change the idea to something better, and come out with a working product at the end.  
