@@ -1,13 +1,17 @@
 #Testing with Unity
 
+##What is Testing?
 Traditionally in Software Development, testing plays an integral role in both the Maintainability and quality the of the product. Of course, in game development, User-Acceptance Testing is completed over and over again. Each time you play the game, see if your newly added creation works is another case of user-acceptance testing. While this is great, frequestly game development testing only centers on "user" centric testing principles. Two testing levels that are frequently left out are Unit and Integration Testing. We're going to focus on Unit testing, as that's frequntly the first step of Automated testing.
 
 Unit testing, for our purposes, is an automated test, which verifies the functionality or specific section of code. It is used to test a small area of code. There is some debate whether this should be a method, or whether this test is a peice of logic. I understand both arguments, and personally agree with the second, yet usually find myself resorting to the first. The reason for this is the nature of a unit test. Our goal is to give our method an input, and expect a cetain output or result. The simplest way to give an input and get an output? Methods. 
 
 So up to this point, why hasn't games taken this route as much as enterprise level software. Well, many large game companies have already taken this route, while small indie teams frequently don't have the budget, or the longevity to do it. But by testing from the start of your project, and using TDD (Test-Driven Developmen) proccesses, you'll find testing becomes a natural starting point for a new feature. So how do we do this?
 
+##Unity Test Tools
 Unity has released an official testing Library. For the sake of this demo, we'll be using the standard C# for development. The testing library can be found in the asset store, under Unity Testing Tools. Once you have added the package to your project, you can begin writing and running your tests.
 
+
+##Example Test
 To write the the test's were going to start with a basic script. Lets make a new script and call it Cat. The file will have the following code:
 
 public class Cat {
