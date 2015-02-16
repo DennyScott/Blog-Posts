@@ -1,5 +1,5 @@
-#Connecting Your Unity Project to a REST API Part 1
-## What is REST and how can we use it?
+#Using a REST API with Unity  Part 1
+## What is REST and Basic Queries?
 
 ##Introduction
 While developing a game, there a number of reasons why you would want to connect to a server. Downloading new assets, such as models, or collecting data from an external source. Downloading bundle assets can be done through your own server, which allows your game to connect to a server and download the most recent versions of bundle assets. 
