@@ -89,8 +89,10 @@ This is a repository of plugins available for Sublime. Type in `Omnisharp`, and 
 Once the plugin is installed, we need to update our Sublime project to work with Unity. Open the root folder of your Unity Project in Sublime. Lets assume your Unity project is called "SuperRPG". You should have a file in this folder called "SuperRPG.sln". With this root folder open in Sublime use `Project` > `Save Project As`, and name your Project the same name as your Unity Project, and place it in the root folder so it is with the "SuperRPG.sln" from before.
 
 ![Save Project As](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/Save%20As.png)
+*Save Project As*
 
 ![See File In Root](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/Root%20File.png)
+*Seeing the File in Root*
 
 *Note: If you do not have a .sln in the root of your project, in Unitys Menu, go to `Assets` > `Sync MonoDevelop`. This will create them.*
 
