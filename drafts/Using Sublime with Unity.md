@@ -5,7 +5,7 @@ I despise MonoDevelop. Developing in Unity has generally been a treat. The versi
 
 **But I can't stand Monodevelop.** It's Vim emulation is spotty, I don't like the available color themes, its slow, it doesn't have a strong community behind it, lack of plugins, and most importantly, you can't open multiple windows in it. 
 
-This is 2015. My toaster can open multiple windows.
+This is 2015. *My toaster can open multiple windows*.
 
 While developing Mobile Apps, Vim has normally been my go-to text-editor. I've also been inclined to use Sublime for a number of projects, on days that plugins frustrate me (when your using plugins last updated in 2005, you know desperation). Latley, a lot of my projects at work revolve around Unity development. Having worked a lot with Unity in my spare time, I was more then happy to sink my teeth into these new projects. But then my old familiar nemesis returned. Monodevelop.
 
@@ -15,7 +15,7 @@ This is a lesson for another day.
 
 When I showed some of my colleagues the success I had achieved with Vim, and about my new freedom from Monodevelop, I had expected celebrations, a revolution throughout the office, possibly [a small statue made out of pure gold](https://www.youtube.com/watch?v=XMjYY3tbX1k). But they looked slightly bemused, and asked one question.
 
-"Vim? Can you do that in Sublime Text?"
+**"Vim? Can you do that in Sublime Text?"**
 
 *(Ok thats sort of two questions, but you get the point.)*
 
