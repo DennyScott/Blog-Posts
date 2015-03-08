@@ -164,7 +164,7 @@ To use XmlDocs, after you completed a method in your C# file, simply go above th
 
 ![XMLDocs](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/XMLDocs%20Tab.png)
 
-The outline of your docs should be generated, and you can simply tab through the parts necessary. I admit, this feature is lacking from what I have found in Vim!
+The outline of your docs should be generated, and you can simply tab through the parts necessary. I admit, there isn't a nice plugin like this in Vim!
 
 I also added DocBlockr, just for help on some other documentation, never hurts either. You can find it as well in the Plugins.
 
@@ -179,6 +179,17 @@ You can now fold and unfold regions from the command palette, or you can simply 
 
 *Warning: Code Folding doesn't work great with Omnisharp. Use it at your own caution. If you use both together, I would warn you to open all code folding before using Omnisharp*
 
+###Vim Mode
+I'm not a fan of the built in vintage plugin to emulate Vim mode. Particularily since, (atleast when I used it before) I couldn't use the ":" key. By nature, :w has been engraved in my brain. So I switched to the excellent [vintageous plugin](https://github.com/guillermooo/Vintageous#vintageous). You can install it in the Command Palette again. Just make sure that in `Sublime Text` > `Preferences` > `Settings - User`, the `ignored_packages` includes this: 
+
+```
+"ignored_packages":
+    [
+        "Vintage"
+    ],
+```
+
+For anymore help getting Vintageous to work, you can check out their [github](https://github.com/guillermooo/Vintageous#vintageous).
 
 ##Sublime Styling
 Alright, I admit. This part isn't necessarily needed, but I like the look of Atom and often try to mimic some of that style. (It's a little too slow for use right now, IMO). So if you are only here for functional help, that part is complete. Instead here we are going to update the style for Sublime.
@@ -207,7 +218,7 @@ Now open your Sublime again, and go to `Sublime Text` > `Preferences` > `Setting
 *Note: We're going to be in this file a lot for this part, so remember how to get to it, or leave it open!*
 
 ###Installing Theme
-We're going to install the Predawn theme. Again, you are always welcome to use your own theme, thats just the one I'm using at this time. To do so, download the theme from your command palette, using predawn. Once tht has downloaded, add the following lines in `Sublime Text` > `Preferences` > `Settings - User` :
+We're going to install the Predawn theme. Again, you are always welcome to use your own theme, thats just the one I'm using at this time. To do so, download the theme from your command palette, using predawn. Once that has downloaded, add the following lines in `Sublime Text` > `Preferences` > `Settings - User` :
 
 ```
  "theme": "predawn.sublime-theme",
