@@ -36,7 +36,7 @@ Aside from that, I'd also like to update the look of Sublimes theme, Icon, and S
 
 *Note: This style isn't required, we can talk about some needed parts, but color is subjective, and totally up to you!*
 
-I develop on a Mac, so I'm going to start from there. If your using Windows, don't worry, you should have an easier time with some of this. This first section will have a bit of work in it just for Mac Developers, so I'll mark where Windows developers should be able to jump in.
+I develop on a Mac, so I'm going to start from there. If your using Windows, don't worry, you should have an easier time with some of this. This first section will have a bit of work in it just for Mac Developers, so I'll mark where Windows developers should be able to jump in. But along the way I'll be speaking mostly from a Mac perspective, so there may be some detective work for Windows users.
 
 I'm also going to go through this with the assumption that you don't have some of the basic tools like package control. If you know them, feel free to skip those segments!
 
