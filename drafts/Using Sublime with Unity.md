@@ -176,7 +176,7 @@ We're going to install the Predawn theme. Again, you are always welcome to use y
 Download one of the New Sublime icons form [here](https://github.com/jamiewilson/predawn/tree/master/dock-icons). I personally like the dark icon. So I went to sublime-predawn-dark-round-icon.icns, and clicked View Raw. This will download the icon for us. The we need to paste this file into ~/Applications/SublimeText/Contents/Resources. Call it "Sublime Text.icns", replacing the old one. Finally, right click the Sublime Text in your Applications folder, and select "Get Info". Drag the dark round icon over the Sublime Icon in the top left.
 
 ###Installing Color Scheme
-In full credit, the color scheme we are using is one called Bold, by Dayle Rees. All of his work can be found (here)[https://github.com/daylerees/colour-schemes]. I've modified his color scheme slightly, and named it Unity. The reason I modded it was to tweak the color of the #regions. They came through as basic white text before, and I altered them to blue. 
+In full credit, the color scheme we are using is one called Bold, by Dayle Rees. All of his work can be found [here](https://github.com/daylerees/colour-schemes). I've modified his color scheme slightly, and named it Unity. The reason I modded it was to tweak the color of the #regions. They came through as basic white text before, and I altered them to blue. 
 
 To download the Unity Theme, [go here](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/unity.tmTheme). Copy the text, and place in a file at ~/Library/Application Support/Sublime Text 3/Packages/User/unity.tmTheme. Once you've pasted it there, go to `Sublime Text` > `Preferences` > `Settings - User` and add:
 
