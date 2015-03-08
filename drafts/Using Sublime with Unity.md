@@ -175,30 +175,31 @@ We're going to install the Predawn theme. Again, you are always welcome to use y
 ###Installing Color Scheme
 In full credit, the color scheme we are using is one called Bold, by Dayle Rees. All of his work can be found (here)[https://github.com/daylerees/colour-schemes]. I've modified his color scheme slightly, and named it Unity. The reason I modded it was to tweak the color of the #regions. They came through as basic white text before, and I altered them to blue. 
 
-To download the Unity Theme, [go here]().
+To download the Unity Theme, [go here](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/unity.tmTheme). Copy the text, and place in a file at ~/Library/Application Support/Sublime Text 3/Packages/User/unity.tmTheme. Once you've pasted it there, go to `Sublime Text` > `Preferences` > `Settings - User` and add:
 
+```
+"color_scheme": "Packages/User/unity.tmTheme",
+```
 
+###Doing Your Own Regions Alteration
+If you want to use your own color theme, but alter the color of Region, you can always open their tmTheme, and add the following:
 
-* Home Brew
-* Mono
-* Omnisharp Sublime
-* Use the Sync Mono Project
-* Omnisharp Reload Solution
-* Add the predawn theme
-* Add the Inconsolata Font To System
-* Create custom Settings
-* Add C# Settings
-* Change the Sublime Text Icon
-* Dayle Rees color scheme, Bold
-* SublimeText Syntax Fold
-* Set C# to default for Syntax Fold
-* DocBlockr
-* xmldocs (Folding code will cause issues with Omnisharp)
-* Unity.tmTheme (Show how regions are done)
+```
+ <dict>
+            <key>name</key>
+            <string>Region</string>
+            <key>scope</key>
+            <string>meta.toc-list.region.source.cs, meta.preprocessor.source.cs</string>
+            <key>settings</key>
+            <dict>
+                <key>foreground</key>
+                <string>#00A8C6</string>
+            </dict>
+        </dict> 
+```
 
-# ToDo
-* Write Blog on Unity/Sublime
-* Finish Article on REST in Unity
-* Fix Calculator and Statistics on Return2Sleep
-* Fix Videos on Return2Sleep
-* Refactor Query/Parse in Unity
+By Changing the foreground Hex (#00A8C6), you can alter the color of region. The rest is up to you!
+
+##Conclusion
+
+I hope this helped some of you guys transition to Sublime. If anyone has any feedback, you can always leave me comment by emailing me at dennyscott301@gmail.com. I'm sure I'll post this at some point in the Unity Reddit, so you can always give some feedback there. You can also follow me on twitter at: [@wpg_denny](https://twitter.com/wpg_denny). Until Next time!
