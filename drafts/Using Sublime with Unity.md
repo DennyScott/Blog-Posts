@@ -21,7 +21,7 @@ When I showed some of my colleagues the success I had achieved with Vim, and abo
 
 So here it is my fickle friends, a way to use Sublime Text as your primary development environment with Unity. Lets outline some of the goals.
 
-We want:
+##Goals we Want to Achieve in Sublime
 * Autocompletion (intellisense). These autocompletions cannot just be static methods saved in the editor, but point to the actual available methods.
 * Syntax Error Reporting.
 * Proper Syntax Highlighting
@@ -30,27 +30,27 @@ We want:
 * Go To Definition Support
 * Vim Keybindings (It's my blog dammit!)
 
-Aside from that, I'd also like to update the look of Sublimes theme, Icon, and Syntax colors. This isn't required, but I find the standard a bit boring. The goal is to eventually look like this: 
+Aside from that, I'd also like to update the look of Sublimes theme, Icon, and Syntax colors. This isn't required, and I'll note where we start it, but I find the standard a bit boring. The goal is to eventually look like this: 
 
 ![Editor](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/Screen%20Shot%202015-03-07%20at%208.24.51%20PM.png)
 
 *Note: This style isn't required, we can talk about some needed parts, but color is subjective, and totally up to you!*
 
-I develop on a Mac, so I'm going to start from there. If your using Windows, don't worry, you should have an easier time with this. This first section will have a bit of work in it just for Mac Developers, so I'll mark where Windows developers should be able to jump in.
+I develop on a Mac, so I'm going to start from there. If your using Windows, don't worry, you should have an easier time with some of this. This first section will have a bit of work in it just for Mac Developers, so I'll mark where Windows developers should be able to jump in.
 
 I'm also going to go through this with the assumption that you don't have some of the basic tools like package control. If you know them, feel free to skip those segments!
 
 ##Mac
 
 ###HomeBrew
-First thing, we need to install [Home Brew](http://brew.sh/). Home brew is a package management system for Mac OSX. I won't go into detail, you can download it and install it through the terminal with: 
+First thing, we need to install [Home Brew](http://brew.sh/). Home brew is a package management system for Mac OSX. I won't go into details, but you can download it and install it through the terminal with: 
 
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 ###Mono
-Homebrew has a ton of great packages, so I recommend checking out other things it has installed. For us we want Mono. Mono is an open-source implementation of the .NET framework. It's going to allow us to build and run C# files on our mac. You install it in the terminal like such:
+Homebrew has a ton of great packages to easily download, it's always handy when you can install something straight from homebrew. For us we want Mono. Mono is an open-source implementation of the .NET framework. It's going to allow us to build and run C# files on our mac. You install it in the terminal like such:
 
 ```
 brew install mono
@@ -59,24 +59,40 @@ brew install mono
 ##Windows and Mac
 
 ###Sublime Text 3
-From here on out, we'll be primarily working in Sublime Text 3. It's a very popular text-editor, that works across all platforms. It's got a ton of baked in features, a huge community, and a ton of plugins to use. To install sublime, [download it here](http://www.sublimetext.com/3). Sublime Text 3 is in Beta, and free to try out as long as you like.
+From here on out, we'll be primarily working in Sublime Text 3. It's a very popular text-editor, that works across all platforms. It's got a ton of baked in features, a huge community, nice interface, and a ton of plugins to use. To install sublime, [download it here](http://www.sublimetext.com/3). Sublime Text 3 is in Beta, and free to try out as long as you like, but do make the purchase if you enjoy it!
 
 ###Package Control
-[Package control](https://packagecontrol.io/installation) is a package management system for Sublime Text. It's a great way to install packages, that simply allows users to find, download, and install plugins all from within the text-editor. A must have for any sublime text user. To install it, type ``ctrl + ` `` in sublime. A console should appear at the bottom of the page. Paste this code in and press enter:
+[Package control](https://packagecontrol.io/installation) is a package management system for Sublime Text. It's a great way to install packages, that simply allows users to find, download, and install plugins all from within the text-editor. A must have for any sublime text user. To install it, type ``ctrl + ` `` in sublime. A console should appear at the bottom of the page.
+
+![console](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/Console.png)
+
+ Paste this code in and press enter:
 
 ```
 import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
 ```
 
-Its recommended from here you restart Sublime.
+Its recommended you quickly restart Sublime.
 
 ###Omnisharp
 [Omnisharp](http://www.omnisharp.net/) allows for Cross-Platform development of .NET in the editor of our choice. Plugins exist for most of the popular editors, including Sublime. It gives us a ton of great features, including intellisense, Go To Definition, Syntax/Semantic Error Highlighting, and more.
 
-We will be using (Omnisharp-sublime)[https://github.com/OmniSharp/omnisharp-sublime]. To install it type `cmd + shift + P` in Sublime, to bring up your command palette. Then type `install`, and select the option "Package Control: Install Package". After a few seconds, another dialog box will open. This is a repository of plugins available for Sublime. Type in `Omnisharp`, and select the Omnisharp plugin.
+We will be using (Omnisharp-sublime)[https://github.com/OmniSharp/omnisharp-sublime]. To install it type `cmd + shift + P` in Sublime, to bring up your command palette. Then type `install`, and select the option "Package Control: Install Package". After a few seconds, another dialog box will open. 
+
+![Packages](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/Installer.png)
+
+This is a repository of plugins available for Sublime. Type in `Omnisharp`, and select the Omnisharp plugin.
+
+*Note: You'll be installing a number of sublime plugins the same way we just did above, so take note!*
 
 ###Create Project Settings
-Once the plugin is installed, we need to update our Sublime project to work with Unity. Open the root folder of your Unity Project in Sublime. Lets assume your project is called "SuperRPG". You should have a file in this folder called "SuperRPG.sln". With this root folder open in Sublime use `Project` > `Save Project As`, and name your Project the same name as your Unity Project, and place it in the root file so it is with the "SuperRPG.sln" from before.
+Once the plugin is installed, we need to update our Sublime project to work with Unity. Open the root folder of your Unity Project in Sublime. Lets assume your Unity project is called "SuperRPG". You should have a file in this folder called "SuperRPG.sln". With this root folder open in Sublime use `Project` > `Save Project As`, and name your Project the same name as your Unity Project, and place it in the root folder so it is with the "SuperRPG.sln" from before.
+
+![Save Project As](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/Save%20As.png)
+
+![See File In Root](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/Root%20File.png)
+
+*Note: If you do not have a .sln in the root of your project, in Unitys Menu, go to `Assets` > `Sync MonoDevelop`. This will create them.*
 
 Then place the following in the created SuperRPG.sublime-project:
 
@@ -93,21 +109,36 @@ Then place the following in the created SuperRPG.sublime-project:
 }
 ```
 
-When doing your own project, remember to change SuperRPG to the name of your project. It's not necessary to store the sublime-project file here, but it does help if another teammate is using Sublime. I should also note, if you are using github, I recommend adding this to your .gitignore:
+*When doing your own project, remember to change SuperRPG to the name of your project*. 
+
+It's not necessary to store the sublime-project file here, but it does help if another teammate is using Sublime. I should also note, if you are using github, I recommend adding this to your .gitignore:
 
 ```
 *.sublime-workspace
 ```
 
 ###Sync With Unity
-Finally we need to make sure that all our sln files have been created. To do this, go to Unity, open your project, and in the menu go `Assets` > `Sync MonoDevelop Project`. This will build the files we need. 
+Finally we need to make sure that all our sln files have been created. These are files created by Unity, that our Omnisharp server reads. To do this, go to Unity, open your project, and in the menu go `Assets` > `Sync MonoDevelop Project`. This will build the files we need. 
 
 Before we finish Omnisharp off, I want to note that I won't be making Sublime the default text editor when double clicking a script in Unity. That's because this particular set up will only start the omnisharp server by opening the project using our .sublime-project. If you open the file directly in Unity, that server won't start. I'm sure you can set that up with Sublime, as my Vim is set up to function as such, but thats a bit outside the scope of this post.
 
 To open the project again in sublime, and start the server, you can do so by going to `Project` > `Open Project...`, and selecting the .sublime-project in the Root Folder of your Unity project.
 
 ###Autocomplete
-With Sublime open to the project, you can try out Omnisharp. As of right now you can trigger the omnisharp server with `ctrl + space`. This can be a bit frustrating, so lets fix it up. Make sure you are in a C# file, and the Syntax is set to C# (bottom right of sublime). Go to `Sublime Text` > `Preferences` > `Settings - More` > `Syntax Specific - User`. Paste the following in:
+With Sublime open to the project, you can try out Omnisharp. As of right now you can trigger the omnisharp server autocomplete with `ctrl + space`. For example, you should be able to take a C# Monobehavior script and try something like:
+
+```
+void Start() {
+    gameObject.
+}
+```
+With your cursor right after the ".", press `ctrl + space`. You should see something like this:
+
+![AutoComplete](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/Autocomplete-One.png)
+
+*Aside: If your code is not calling the omnisharp, you aren't seeing auto-complete, and a console is popping up on save in your sublime, you may need to reload your sln file. To do so, type `ctrl + shift + p`, and select `OmniSharpSublime: Reload Solution`.*
+
+ This can be a bit frustrating, so lets fix it up. Make sure you are in a C# file, and the Syntax is set to C# (bottom right of sublime). Go to `Sublime Text` > `Preferences` > `Settings - More` > `Syntax Specific - User`. Paste the following in:
 
 ```
  {
@@ -119,16 +150,19 @@ With Sublime open to the project, you can try out Omnisharp. As of right now you
 
 This will allow you to trigger auto complete on . as well!
 
-If your code is not calling the omnisharp, you aren't seeing auto-complete, and a console is popping up on save in your sublime, you may need to reload your sln file. To do so, type `ctrl + shift + p`, and select `OmniSharpSublime: Reload Solution`.
-
 ### Features of Omnisharp
 Theres so many awesome features of Omnisharp. Feel free to explore them either in the command palette, or you can always right click you code, and select "OmniSharpSublime" to use some other great features!
 
+I Highly recommend using Go To Definition and Find Usages for starters!
 
 ###XML Docs
 We normally use the standard XML documentation for our Unity projects, so after a little searching we found one we like called XmlDocs. You can find it in your Command Palette by searching for plugins again. 
 
-To use XmlDocs, after you completed a method in your C# file, simply go above the method, type `///` and press `tab`. The outline of your docs should be generated, and you can simply tab through the parts necessary. I admit, this feature is lacking from what I have found in Vim!
+To use XmlDocs, after you completed a method in your C# file, simply go above the method, type `///` and press `tab`. 
+
+![XMLDocs](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/XMLDocs%20Tab.png)
+
+The outline of your docs should be generated, and you can simply tab through the parts necessary. I admit, this feature is lacking from what I have found in Vim!
 
 I also added DocBlockr, just for help on some other documentation, never hurts either. You can find it as well in the Plugins.
 
@@ -139,6 +173,8 @@ Once you have installed it, you can type `shift` + `f5` and select `C#` from the
 
 You can now fold and unfold regions from the command palette, or you can simply open and close them using arrows in the gutter where the regions are.
 
+![Region Arrow](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/RegionArrow.png)
+
 *Warning: Code Folding doesn't work great with Omnisharp. Use it at your own caution. If you use both together, I would warn you to open all code folding before using Omnisharp*
 
 
@@ -147,6 +183,8 @@ Alright, I admit. This part isn't necessarily needed, but I like the look of Ato
 
 ###Installing Font
 I want to use the Inconsolata, so we'll need to install it to our font system. I am unsure of the procedure in Windows, but for windows we want to go to [Google Fonts](http://www.google.com/fonts/) and search for Inconsolata. Click the "Add To Collection" button on the right, then the Arrow on the Upper Right to download this font. Click the ".zip File" in the popup.
+
+![Download Zip](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/released/Sublime-Unity/Download%20Zip.png)
 
 Once that has downloaded. Unzip it and double click each of the .ttf and choose "Install Font".
 
@@ -163,6 +201,8 @@ Now open your Sublime again, and go to `Sublime Text` > `Preferences` > `Setting
 "caret_style": "phase",
 "word_wrap": false,
 ```
+
+*Note: We're going to be in this file a lot for this part, so remember how to get to it, or leave it open!*
 
 ###Installing Theme
 We're going to install the Predawn theme. Again, you are always welcome to use your own theme, thats just the one I'm using at this time. To do so, download the theme from your command palette, using predawn. Once tht has downloaded, add the following lines in `Sublime Text` > `Preferences` > `Settings - User` :
