@@ -1,5 +1,5 @@
-# Making a Unity Work Environment
-##My Life, 1989 - Now
+# Unity and Sublime
+##My Struggle With an IDE
 
 I despise MonoDevelop. Developing in Unity has generally been a treat. The version control isn't always the greatest, but using a formal environment, rather then just simple a framework, whichs helps save tons of time and effort, Unity has always had huge upsides. 
 
