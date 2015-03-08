@@ -180,7 +180,7 @@ You can now fold and unfold regions from the command palette, or you can simply 
 *Warning: Code Folding doesn't work great with Omnisharp. Use it at your own caution. If you use both together, I would warn you to open all code folding before using Omnisharp*
 
 ###Vim Mode
-I'm not a fan of the built in vintage plugin to emulate Vim mode. Particularily since, (atleast when I used it before) I couldn't use the ":" key. By nature, :w has been engraved in my brain. So I switched to the excellent [vintageous plugin](https://github.com/guillermooo/Vintageous#vintageous). You can install it in the Command Palette again. Just make sure that in `Sublime Text` > `Preferences` > `Settings - User`, the `ignored_packages` includes this: 
+I'm not a fan of the built in vintage plugin to emulate Vim mode. Particularily since, (atleast when I used it before) I couldn't use the ":" key. By nature, :w has been engraved in my brain. So I switched to the excellent [vintageous plugin](http://guillermooo.bitbucket.org/Vintageous/). You can install it in the Command Palette again. Just make sure that in `Sublime Text` > `Preferences` > `Settings - User`, the `ignored_packages` includes this: 
 
 ```
 "ignored_packages":
