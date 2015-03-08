@@ -9,13 +9,14 @@ This is 2015. My toaster can open multiple windows.
 
 While developing Mobile Apps, Vim has normally been my go-to text-editor. I've also been inclined to use Sublime for a number of projects, on days that plugins frustrate me (when your using plugins last updated in 2005, you know desperation). Latley, a lot of my projects at work revolve around Unity development. Having worked a lot with Unity in my spare time, I was more then happy to sink my teeth into these new projects. But then my old familiar nemesis returned. Monodevelop.
 
-I realize a good solution would be to use Visual Studio, and I understand a large amount of Unity developers use VS. In honesty, I have not tried Visual Studio, though I'm sure I will use it (or the dreaded MonoDevelop) for Debugging scripts one of these days, so I can't give it a rating in either way. But I decided some time ago that for me personally, I'm going to change my Unity editing environment to Vim. 
+I realize a good solution would be to use Visual Studio, and I understand a large amount of Unity developers use VS. In honesty, I have not tried Visual Studio, though I'm sure I will use it (or the dreaded MonoDevelop) for bebugging scripts one of these days, so I can't give it a rating in either way. But I decided some time ago that for me personally, I'm going to change my Unity editing environment to Vim. 
 
 This is a lesson for another day. 
 
-When I showed some of my colleagues the success I had with Vim, and about my new freedom from Monodevelop, I had expected celebrations, a revoltion throughout the office, possibly [a small statue made out of pure gold](https://www.youtube.com/watch?v=XMjYY3tbX1k). But only one question came out of there mouths.
+When I showed some of my colleagues the success I had achieved with Vim, and about my new freedom from Monodevelop, I had expected celebrations, a revolution throughout the office, possibly [a small statue made out of pure gold](https://www.youtube.com/watch?v=XMjYY3tbX1k). But they looked slightly bemused, and asked one question.
 
 "Vim? Can you do that in Sublime Text?"
+
 *(Ok thats sort of two questions, but you get the point.)*
 
 So here it is my fickle friends, a way to use Sublime Text as your primary development environment with Unity. Lets outline some of the goals.
