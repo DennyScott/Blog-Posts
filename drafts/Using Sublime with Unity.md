@@ -36,7 +36,7 @@ Aside from that, I'd also like to update the look of Sublimes theme, Icon, and S
 
 *Note: This style isn't required, we can talk about some needed parts, but color is subjective, and totally up to you!*
 
-I develop on a Mac, so I'm going to start from there. If your using Windows, don't worry, you should have an easier time with some of this. This first section will have a bit of work in it just for Mac Developers, so I'll mark where Windows developers should be able to jump in. But along the way I'll be speaking mostly from a Mac perspective, so there may be some detective work for Windows users.
+I develop on a Mac, so I'm going to start from there. If you're using Windows, don't worry, you should have an easier time with some of this. This first section will have a bit of work in it just for Mac Developers, so I'll mark where Windows developers should be able to jump in. But along the way I'll be speaking mostly from a Mac perspective, so there may be some detective work for Windows users.
 
 I'm also going to go through this with the assumption that you don't have some of the basic tools like package control. If you know them, feel free to skip those segments!
 
@@ -122,7 +122,7 @@ It's not necessary to store the sublime-project file here, but it does help if a
 ###Sync With Unity
 Finally we need to make sure that all our sln files have been created. These are files created by Unity, that our Omnisharp server reads. To do this, go to Unity, open your project, and in the menu go `Assets` > `Sync MonoDevelop Project`. This will build the files we need. 
 
-Before we finish Omnisharp off, I want to note that I won't be making Sublime the default text editor when double clicking a script in Unity. That's because this particular set up will only start the omnisharp server by opening the project using our .sublime-project. If you open the file directly in Unity, that server won't start. I'm sure you can set that up with Sublime, as my Vim is set up to function as such, but thats a bit outside the scope of this post.
+Before we finish Omnisharp off, I want to note that I won't be making Sublime the default text editor when double clicking a script in Unity. That's because this particular setup will only start the omnisharp server by opening the project using our .sublime-project. If you open the file directly in Unity, that server won't start. I'm sure you can set that up with Sublime, as my Vim is set up to function as such, but thats a bit outside the scope of this post.
 
 To open the project again in sublime, and start the server, you can do so by going to `Project` > `Open Project...`, and selecting the .sublime-project in the Root Folder of your Unity project.
 
@@ -180,7 +180,7 @@ You can now fold and unfold regions from the command palette, or you can simply 
 *Warning: Code Folding doesn't work great with Omnisharp. Use it at your own caution. If you use both together, I would warn you to open all code folding before using Omnisharp*
 
 ###Vim Mode
-I'm not a fan of the built in vintage plugin to emulate Vim mode. Particularily since, (atleast when I used it before) I couldn't use the ":" key. By nature, :w has been engraved in my brain. So I switched to the excellent [vintageous plugin](http://guillermooo.bitbucket.org/Vintageous/). You can install it in the Command Palette again. Just make sure that in `Sublime Text` > `Preferences` > `Settings - User`, the `ignored_packages` includes this: 
+I'm not a fan of the built in vintage plugin to emulate Vim mode. Particularly since, (at least when I used it before) I couldn't use the ":" key. By nature, :w has been engraved in my brain. So I switched to the excellent [vintageous plugin](http://guillermooo.bitbucket.org/Vintageous/). You can install it in the Command Palette again. Just make sure that in `Sublime Text` > `Preferences` > `Settings - User`, the `ignored_packages` includes this: 
 
 ```
 "ignored_packages":
@@ -260,3 +260,4 @@ By Changing the foreground Hex (#00A8C6), you can alter the color of region. The
 ##Conclusion
 
 I hope this helped some of you guys transition to Sublime. If anyone has any feedback, you can always leave me comment by emailing me at dennyscott301@gmail.com. I'm sure I'll post this at some point in the Unity Reddit, so you can always give some feedback there. You can also follow me on twitter at: [@wpg_denny](https://twitter.com/wpg_denny). Until Next time!
+
