@@ -4,6 +4,7 @@
 
 Alright, so first off in this one lets create a weapon.  Now, I'm not going into minute details like creating an actual weapon for our hero, but lets for sure create a bullet, or else its going to be hard to shoot enemies!  So first, create a sphere called "Bullet" change all its scale values to 0.2 and attach a new material to it that will be yellow.  Make sure afterwards to make the Bullet a Prefab by dragging it into the Project Assets folder.  Lastly, remove the sphere collider, and add a circle collider 2D to it. 
 
+![Sphere specs](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/drafts/Megaman/Pt2/1.png)
 Now that we have our bullet, lets create a new script called "Weapon", and attach it to our Player Object. We'll also create another new script called "Bullet" and attach it to our Bullet Prefab. In fact we didn't do it in the last article, but lets actually make the Player object a prefab.  Now first, open the PlayerMovement script and lets make a quick edit.
 
 ``` c#
@@ -124,7 +125,11 @@ So now we have what is essentially a manager of these two together.  This one wi
 
 Next let’s create an enemy for this bullet to interact with.  So lets create a cube, make him red with a material, and then give him the tag "Enemy" as well as the name "Enemy".  Take off the box collider, and attach a box collider 2D, as well as a rigidbody2D.  Lastly, make this enemy a prefab.  It should look like the following in the inspector.
 
+![Enemy Inspector](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/drafts/Megaman/Pt2/5.png)
+
 Now to make sure our player and bullet don't bump each other anymore, let's quickly take that out of the physicsManager.  First, create three layers, "Bullet", "Player", and "Enemy".  Each opf these three game objects should be put on their respective layers.  Now in the PhysicsManager under Edit _> Project Settings -> Physics 2D, make sure that the player and bullet classes are NOT checked, so they no longer respond to each other.
+
+![Physics Manager](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/drafts/Megaman/Pt2/6.png)
 
 Okay, now let's create an "Enemy" script and attach it to the Enemy game object.
 
