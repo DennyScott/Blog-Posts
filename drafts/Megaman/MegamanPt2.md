@@ -5,6 +5,7 @@
 Alright, so first off in this one lets create a weapon.  Now, I'm not going into minute details like creating an actual weapon for our hero, but lets for sure create a bullet, or else its going to be hard to shoot enemies!  So first, create a sphere called "Bullet" change all its scale values to 0.2 and attach a new material to it that will be yellow.  Make sure afterwards to make the Bullet a Prefab by dragging it into the Project Assets folder.  Lastly, remove the sphere collider, and add a circle collider 2D to it. 
 
 ![Sphere specs](https://raw.githubusercontent.com/DennyScott/Blog-Posts/master/drafts/Megaman/Pt2/1.png)
+
 Now that we have our bullet, lets create a new script called "Weapon", and attach it to our Player Object. We'll also create another new script called "Bullet" and attach it to our Bullet Prefab. In fact we didn't do it in the last article, but lets actually make the Player object a prefab.  Now first, open the PlayerMovement script and lets make a quick edit.
 
 ``` c#
