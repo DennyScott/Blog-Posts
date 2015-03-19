@@ -1,5 +1,5 @@
 ##Recognition
-Before I start I would be both a liar and a jerk if I said I learned about this topic on my own, and I had to read a lot of great articles on this topic. The best one out there for this topic I found was at [Delegates, Events, and Singletons](http://www.indiedb.com/groups/unity-devs/tutorials/delegates-events-and-singletons-with-unity3d-c) posted by vicestudios.  The other great area is of course the actual [Unity Learn](http://unity3d.com/learn) section of the Unity site.  Watch these videos, there really great and can teach you some really cool coding techniques.  For me coming from mostly JavaScript to C#, an extra resource to just show you some common and well used patterns was really helpful!
+Before I start, I would be both a liar and a jerk if I said I learned about this topic on my own, and I had to read a lot of great articles on this topic. The best info out there for this topic was [Delegates, Events, and Singletons](http://www.indiedb.com/groups/unity-devs/tutorials/delegates-events-and-singletons-with-unity3d-c) posted by vicestudios.  The other great area is of course the actual [Unity Learn](http://unity3d.com/learn) section of the Unity site.  Watch these videos, they're really great and can teach you some really cool coding techniques.  For me, primarily coming from a JavaScript background, then transitioning to C#, an extra resource to just show you some common and well used patterns was really helpful!
 
 ##Basic Script Interaction
 So first lets show how you may normally interact between two scripts in Unity.
@@ -35,9 +35,12 @@ public class Player() {
     }
 }
 ```
+*Note: We are only demonstrating a public api to pick up the object, an external manager or button press would call this api."*
 
 ##Separating Scripts
-Now, in a real program I would likely recommend using enums to handle a state change like this, but this is just a simple example to show interacting between two scripts.  The Bucket script would be attached to a bucket object, and the player class attached to a player object.  Now the goal of this is to create re-usable code, and both of these classes are pretty specific to our game, so lets break down the Bucket class into a new class that may be a little more usable.  I should warn you, as you go through this your code will indeed become bigger, so if you're all about the shortest code, please don't show up at my house with pitch forks and torches.
+Now, in a real program I would likely recommend using enums to handle a state change like this, but this is just a simple example to show interacting between two scripts.  The Bucket script would be attached to a bucket object, and the player class attached to a player object. Now the goal of this exercise is to create re-usable code, and both of these classes are pretty specific to our game, so lets break down the Bucket class into a new class that may be a little more usable.
+
+I should warn you, as you go through this your code will indeed become larger, so if you're all about the shortest code, please don't show up at my house with pitch forks and torches.
 
 ``` c#
 public class PickUpObject() {
@@ -62,7 +65,9 @@ public class PickUpObject() {
 ```
 
 ##Void Delegates and Events
-Okay well thats a start, but this PickUpObject script is still very coupled with the Player class, and contextually it doesn't make sense.  If this script is simply to just to pick up objects, why does it adjust an attribute in the Player class?  Now one class will generally always be coupled in some manner, unless you use something more complicated like a Pub-Sub adapter to manager messages, and it seems that our player class is acting as more of a manager here, so it will be the one that we will load with the coupling logic.  When constructing these scripts, I tend to want scripts such as PickUpObject to be "Plug and Play" on any object I drop it on, meaning I don't have to code whole aspects again.  This is going to be a building process, so let's re-factor this code and add some simple void delegates and events.
+Okay well thats a start, but our PickUpObject script is still very coupled with the Player class, and contextually it doesn't make sense.  If this script is simply to just to pick up objects, why does it adjust an attribute in the Player class?  Now one class will generally always be coupled in some manner, unless you use something more complicated like a Pub-Sub adapter to manage messages, and it seems that our player class is acting as more of a manager here, so it will be the one that we will load with the coupling logic.  
+
+When constructing these scripts, I tend to want scripts such as PickUpObject to be "Plug and Play" on any object I drop it on, meaning I don't have to code whole aspects again.  This is going to be a building process, so let's re-factor this code and add some simple void delegates and events.
 
 ``` C#
 public class PickUpObject() {
@@ -112,7 +117,7 @@ Now inside the PickUpObject method the OnPickUp event is actually called with th
 Next in our Player class, we go through all buckets that may be in the scene, get the PickUpObject component, and += a handler method in this class onto that event.  This is a delegate behavior that allows us to add numerous methods to this object.  So other classes could also have their own handler for when this event is triggered, and when the event is called, it will call event attached handler method.
 
 ##Boolean Delegates and Events
-Oh, but there is a small problem though.  We no longer check to make sure that the player is not already holding a bucket!  Well we can fix that through events again, but this time a little different.  Where going to use a little boolean trickery in our event!
+Oh, but there is a small problem though.  We no longer check to make sure that the player is not already holding a bucket!  Well we can fix that through events again, but this time a little different.  Were going to use a little boolean trickery in our event!
 
 ``` c#
 public class PickUpObject() {
@@ -150,7 +155,7 @@ public class Player() {
     }
     
     bool HandleCanPickUp(GameObject g) {
-    	return HoldingObject == false;
+    	return !HoldingObject;
     }
     
     
@@ -168,7 +173,7 @@ public class Player() {
 Now we have a delegate that returns a boolean value, and an event built from it.   Based on the flow we have, an item can only be picked up if CanPick has not been subscribed to by any handlers, or if the subscription method returns true.  Now this probably seems like a very strange mix as true and null usually don't mix, but its to protect script independence.  Basically this script will now always work when dropped on an object, unless another class adds some rules to it.  So in essence, a bucket can always be picked up, but if we want the functionality that it can only be picked up when another bucket is not already in the players possession, we add that functionality through an event call, maintaining script independence.
 
 ##Using the Invocation list
-This event when called currently will call all attached scripts and return the value of the last one.  Then in our Player class we subscribe a handle function that return true if the bucket can be picked up. This works perfectly for a one attached handler script, but anymore and it will fail.  So we're going to do a neat little trick with it using the Invocation list.  Now you may think of other cool ways to use this, but I find this type of algorithm only really works with boolean value methods.  So lets code it quickly now.
+This event, when called, will call all attached scripts and return the value of the last one.  Then in our Player class we subscribe a handle function that return true if the bucket can be picked up. This works perfectly for a one attached handler script, but anymore and it will fail.  So we're going to do a neat little trick with it using the Invocation list.  Now you may think of other cool ways to use this, but I find this type of algorithm only really works with boolean value methods.  So lets code it quickly now.
 
 ``` c#
 public class PickUpObject() {
@@ -229,6 +234,8 @@ public class Player() {
 So we moved our CanPickUp into a separate method and now use the GetInvocationList to cycle through each event handler subscribed.  If any of them are false, we return false, if not we return true.  So in essence we have made a gigantic extend-able OR statement with methods, but cleaned it up to be super simple.  Now we have our functionality complete, our PickUpObject script is independent but has the hooks needed to control some of the logic if needed by an outside source thus maintaining code independence.
 
 ##Drawbacks
-There is one large draw back with this style of coding though, which is debugging.  Now, don't run for the hills in terror, its not really tough, it just requires a little more work to manage your code.  The reason this is tough for debugging is that you have to now work backwards through your code to debug.  Before, you could just go to bucket, see that its calling Player, and go straight to the Player class.  Well now, your going to go the the PickUpObject class, and then wonder what class is subscribing to this method that is not allowing it to be picked up.  Of course, you could simply select the event, right click, and find its usages, but this may not be optimal for you which I totally understand.  I love using delegates and events like this as it allows me to jut drop scripts on and start enforcing rules, but if it feels a little to tough to manage, don't throw them out, just keep them in your pocket as a tool to use if the problem needed them arises.  
+There is one large draw back with this style of coding though, which is debugging.  Now, don't run for the hills in terror, its not really tough, it just requires a little more work to manage your code.  The reason this is tough for debugging is that you have to now work backwards through your code to debug.  Before, you could just go to bucket, see that its calling Player, and go straight to the Player class.  Well now, your going to go the the PickUpObject class, and then wonder what class is subscribing to this method that is not allowing it to be picked up. 
+
+Of course, you could simply select the event, right click, and find its usages, but this may not be optimal for you which I totally understand.  I love using delegates and events like this as it allows me to jut drop scripts on and start enforcing rules, but if it feels a little to tough to manage, don't throw them out, just keep them in your pocket as a tool to use if the problem needed them arises.  
 
 Hey thanks for reading guys!  Any questions you can reach me at travisscott301@gmail.com or @gizmmo_cti, and more importantly send me feedback so I can improve this article!
