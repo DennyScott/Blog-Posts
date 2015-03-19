@@ -58,7 +58,7 @@ Now let's step through what we've done here to demonstrate what each piece of co
 Once you have imported this package, we need to include
 
 ```cs
-import SimpleJSON
+import SimpleJSON;
 ```
 at the stop of our script. Assuming we have completed the GET request earlier, and now have the data in a variable called result, we can move to the next step.
 
@@ -88,7 +88,7 @@ So we extract each employee from the employees array. Now, the employee is a JSO
     string salary = employee.AsObject["salary"].Value;
 ```
 
-Once we are inside the foreach loop, we will take the JSONClass employee, case it correctly to an object, and take the string we need in it. The trick is, SimpleJSON still doesn't know what type of object is on the other end, so we need to tell it that we want the value from this return. 
+Once we are inside the foreach loop, we will take the JSONClass employee, cast it correctly to an object, and take the string we need in it. The trick is, SimpleJSON still doesn't know what type of object is on the other end, so we need to tell it that we want the value from this return. 
 
 Since we know the structure of the JSON we can construct our code to handle the JSON. 
 
