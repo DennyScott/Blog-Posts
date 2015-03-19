@@ -1,58 +1,60 @@
-##Recognition
+##Getting Started
+
+
 Before I start I would be both a liar and a jerk if I said I learned about this topic on my own, and I had to read a lot of great articles on this topic. The best one out there for this topic I found was at [Delegates, Events, and Singletons](http://www.indiedb.com/groups/unity-devs/tutorials/delegates-events-and-singletons-with-unity3d-c) posted by vicestudios.  The other great area is of course the actual [Unity Learn](http://unity3d.com/learn) section of the Unity site.  Watch these videos, there really great and can teach you some really cool coding techniques.  For me coming from mostly JavaScript to C#, an extra resource to just show you some common and well used patterns was really helpful!
 
-##Basic Script Interaction
+####Basic Script Interaction
 So first lets show how you may normally interact between two scripts in Unity.
 
 ``` c#
 public class Bucket() {
-	Player obj;
+    Player obj;
     GameObject playerObject;
     
     void Start() {
-    	playerObject = GameObject.FindWithTag("Player");
-    	obj = someGameObject.GetComponent<Player>();
+        playerObject = GameObject.FindWithTag("Player");
+        obj = someGameObject.GetComponent<Player>();
     }
     
     public void PickUpBucket(Transform objectToFollow) {
-    	if(!obj.HoldingBucket) {
-    		obj.HoldingBucket = true;
+        if(!obj.HoldingBucket) {
+            obj.HoldingBucket = true;
             gameObject.transform.parent = objectToFollow;
         }
     }
 }
 
 public class Player() {
-	bool holdingObject;
+    bool holdingObject;
     
     public bool HoldingObject {
-    	get {
-        	return holdingObject;
+        get {
+            return holdingObject;
         }
         set {
-        	holdingObject = value;
+            holdingObject = value;
         }
     }
 }
 ```
 
-##Separating Scripts
+####Separating Scripts
 Now, in a real program I would likely recommend using enums to handle a state change like this, but this is just a simple example to show interacting between two scripts.  The Bucket script would be attached to a bucket object, and the player class attached to a player object.  Now the goal of this is to create re-usable code, and both of these classes are pretty specific to our game, so lets break down the Bucket class into a new class that may be a little more usable.  I should warn you, as you go through this your code will indeed become bigger, so if you're all about the shortest code, please don't show up at my house with pitch forks and torches.
 
 ``` c#
 public class PickUpObject() {
-	Player obj;
+    Player obj;
     GameObject playerObject;
     
     void Start() {
-    	playerObject = GameObject.FindWithTag("Player");
-    	obj = someGameObject.GetComponent<Player>();
+        playerObject = GameObject.FindWithTag("Player");
+        obj = someGameObject.GetComponent<Player>();
     }
     
     public void PickUpObject(Transform objectToFollow) {
-    	if(!obj.HoldingBucket) {
-	    	obj.HoldingBucket = true;
-        	gameObject.transform.parent = objectToFollow;
+        if(!obj.HoldingBucket) {
+            obj.HoldingBucket = true;
+            gameObject.transform.parent = objectToFollow;
         }
     }
 }
@@ -60,44 +62,46 @@ public class PickUpObject() {
 
 
 ```
-
-##Void Delegates and Events
+___
+##Creating Delegates and Events
 Okay well thats a start, but this PickUpObject script is still very coupled with the Player class, and contextually it doesn't make sense.  If this script is simply to just to pick up objects, why does it adjust an attribute in the Player class?  Now one class will generally always be coupled in some manner, unless you use something more complicated like a Pub-Sub adapter to manager messages, and it seems that our player class is acting as more of a manager here, so it will be the one that we will load with the coupling logic.  When constructing these scripts, I tend to want scripts such as PickUpObject to be "Plug and Play" on any object I drop it on, meaning I don't have to code whole aspects again.  This is going to be a building process, so let's re-factor this code and add some simple void delegates and events.
+####Void Delegates and Events
+The first type of delegate I'm going to be showing the the void type delegate.  This means I'm going to make a method signature that returns a type of void, and then I can create other methods that are of that delegate type, ensuring that I return void.  I also must pass the same parameters as the delegate, so in the case coming up, this means whenever the event is called it must also pass a GameObject as an argument.
 
 ``` C#
 public class PickUpObject() {
-	public delegate void TriggerEvent(GameObject g);
+    public delegate void TriggerEvent(GameObject g);
     public event TriggerEvent OnPickUp;
     
     public void PickUpObject(Transform objectToFollow) {
-    	gameObject.transform.parent = objectToFollow;
-    	if(OnPickUp != null)
-        	OnPickUp(gameObject);
+        gameObject.transform.parent = objectToFollow;
+        if(OnPickUp != null)
+            OnPickUp(gameObject);
     }
 }
 
 public class Player() {
-	bool holdingObject;
+    bool holdingObject;
     
     void Start() {
-    	GameObject[] buckets = GameObject.FindGameObjectsWithTag("Bucket");
+        GameObject[] buckets = GameObject.FindGameObjectsWithTag("Bucket");
         foreach(GameObject bucket in buckets) {
-        	bucket.GetComponent<PickUpObject>().OnPickUp += HandleOnPickUp;
+            bucket.GetComponent<PickUpObject>().OnPickUp += HandleOnPickUp;
         }
     }
     
     void HandleOnPickUp(GameObject g) {
-    	g.transform.parent = gameObject;
+        g.transform.parent = gameObject;
         HoldingObject = true;
     }
     
     
     public bool HoldingObject {
-    	get {
-        	return holdingObject;
+        get {
+            return holdingObject;
         }
         set {
-        	holdingObject = value;
+            holdingObject = value;
         }
     }
 }
@@ -116,50 +120,50 @@ Oh, but there is a small problem though.  We no longer check to make sure that t
 
 ``` c#
 public class PickUpObject() {
-	public delegate void TriggerEvent(GameObject g);
+    public delegate void TriggerEvent(GameObject g);
     public event TriggerEvent OnPickUp;
     
     public delegate bool IsAcceptable(Gameobject g);
     public event IsAcceptable CanPickUp;
     
     public void PickUpObject(Transform objectToFollow) {
-    	if(CanPickUp == null || CanPickUp()) {
-    		gameObject.transform.parent = objectToFollow;
-	    	if(OnPickUp != null)
-    	    	OnPickUp(gameObject);
+        if(CanPickUp == null || CanPickUp()) {
+            gameObject.transform.parent = objectToFollow;
+            if(OnPickUp != null)
+                OnPickUp(gameObject);
         }
     }
 }
 
 public class Player() {
-	bool holdingObject;
+    bool holdingObject;
     
     void Start() {
-    	GameObject[] buckets = GameObject.FindGameObjectsWithTag("Bucket");
+        GameObject[] buckets = GameObject.FindGameObjectsWithTag("Bucket");
         foreach(GameObject bucket in buckets) {
-        	PickUpObject objScript = bucket.GetComponent<PickUpObject>();
-        	objScript.OnPickUp += HandleOnPickUp;
+            PickUpObject objScript = bucket.GetComponent<PickUpObject>();
+            objScript.OnPickUp += HandleOnPickUp;
             objScript.CanPickUp += HandleCanPickUp;
             
         }
     }
     
     void HandleOnPickUp(GameObject g) {
-    	g.transform.parent = gameObject;
+        g.transform.parent = gameObject;
         HoldingObject = true;
     }
     
     bool HandleCanPickUp(GameObject g) {
-    	return HoldingObject == false;
+        return HoldingObject == false;
     }
     
     
     public bool HoldingObject {
-    	get {
-        	return holdingObject;
+        get {
+            return holdingObject;
         }
         set {
-        	holdingObject = value;
+            holdingObject = value;
         }
     }
 }
@@ -172,27 +176,27 @@ This event when called currently will call all attached scripts and return the v
 
 ``` c#
 public class PickUpObject() {
-	public delegate void TriggerEvent(GameObject g);
+    public delegate void TriggerEvent(GameObject g);
     public event TriggerEvent OnPickUp;
     
     public delegate bool IsAcceptable(Gameobject g);
     public event IsAcceptable CanPickUp;
     
     public void PickUpObject(Transform objectToFollow) {
-    	if(IsAbleToPickUp()) {
-    		gameObject.transform.parent = objectToFollow;
-	    	if(OnPickUp != null)
-    	    	OnPickUp(gameObject);
+        if(IsAbleToPickUp()) {
+            gameObject.transform.parent = objectToFollow;
+            if(OnPickUp != null)
+                OnPickUp(gameObject);
         }
     }
     
     void IsAbleToPickUp() {
-    	if(CanPickUp == null)
-        	return true;
+        if(CanPickUp == null)
+            return true;
         
         foreach(IsAcceptable check in CanPickUp.GetInvocationList()) {
-        	if (check() == false)
-            	return false;
+            if (check() == false)
+                return false;
         }
         
         return true;
@@ -200,25 +204,25 @@ public class PickUpObject() {
 }
 
 public class Player() {
-	bool holdingObject;
+    bool holdingObject;
     
     void Start() {
-    	GameObject[] buckets = GameObject.FindGameObjectsWithTag("Bucket");
+        GameObject[] buckets = GameObject.FindGameObjectsWithTag("Bucket");
         foreach(GameObject bucket in buckets) {
-        	PickUpObject objScript = bucket.GetComponent<PickUpObject>();
-        	objScript.OnPickUp += HandleOnPickUp;
+            PickUpObject objScript = bucket.GetComponent<PickUpObject>();
+            objScript.OnPickUp += HandleOnPickUp;
             objScript.CanPickUp += HandleCanPickUp;
             
         }
     }
     
     void HandleOnPickUp(GameObject g) {
-    	g.transform.parent = gameObject;
+        g.transform.parent = gameObject;
         HoldingObject = true;
     }
     
     bool HandleCanPickUp(GameObject g) {
-    	return HoldingObject == false;
+        return HoldingObject == false;
     }
     
     
