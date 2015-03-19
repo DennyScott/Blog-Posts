@@ -16,10 +16,10 @@ public class Bucket() {
         obj = someGameObject.GetComponent<Player>();
     }
     
-    public void PickUpBucket(Transform objectToFollow) {
+    public void PickUpBucket(GameObject objectToFollow) {
         if(!obj.HoldingBucket) {
             obj.HoldingBucket = true;
-            gameObject.transform.parent = objectToFollow;
+            gameObject.transform.parent = objectToFollow.transform;
         }
     }
 }
@@ -27,14 +27,7 @@ public class Bucket() {
 public class Player() {
     bool holdingObject;
     
-    public bool HoldingObject {
-        get {
-            return holdingObject;
-        }
-        set {
-            holdingObject = value;
-        }
-    }
+    public bool HoldingObject {get; set;}
 }
 ```
 
@@ -51,10 +44,10 @@ public class PickUpObject() {
         obj = someGameObject.GetComponent<Player>();
     }
     
-    public void PickUpObject(Transform objectToFollow) {
+    public void PickUpObject(GameObject objectToFollow) {
         if(!obj.HoldingBucket) {
             obj.HoldingBucket = true;
-            gameObject.transform.parent = objectToFollow;
+            gameObject.transform.parent = objectToFollow.transform;
         }
     }
 }
@@ -73,8 +66,8 @@ public class PickUpObject() {
     public delegate void TriggerEvent(GameObject g);
     public event TriggerEvent OnPickUp;
     
-    public void PickUpObject(Transform objectToFollow) {
-        gameObject.transform.parent = objectToFollow;
+    public void PickUpObject(GameObject objectToFollow) {
+        gameObject.transform.parent = objectToFollow.transform;
         if(OnPickUp != null)
             OnPickUp(gameObject);
     }
@@ -91,19 +84,11 @@ public class Player() {
     }
     
     void HandleOnPickUp(GameObject g) {
-        g.transform.parent = gameObject;
         HoldingObject = true;
     }
     
     
-    public bool HoldingObject {
-        get {
-            return holdingObject;
-        }
-        set {
-            holdingObject = value;
-        }
-    }
+    public bool HoldingObject {get; set;}
 }
 ```
 
@@ -128,7 +113,7 @@ public class PickUpObject() {
     
     public void PickUpObject(Transform objectToFollow) {
         if(CanPickUp == null || CanPickUp()) {
-            gameObject.transform.parent = objectToFollow;
+            gameObject.transform.parent = objectToFollow.transform;
             if(OnPickUp != null)
                 OnPickUp(gameObject);
         }
@@ -149,7 +134,6 @@ public class Player() {
     }
     
     void HandleOnPickUp(GameObject g) {
-        g.transform.parent = gameObject;
         HoldingObject = true;
     }
     
@@ -158,14 +142,7 @@ public class Player() {
     }
     
     
-    public bool HoldingObject {
-        get {
-            return holdingObject;
-        }
-        set {
-            holdingObject = value;
-        }
-    }
+    public bool HoldingObject {get; set;}
 }
 ```
 
@@ -184,13 +161,13 @@ public class PickUpObject() {
     
     public void PickUpObject(Transform objectToFollow) {
         if(IsAbleToPickUp()) {
-            gameObject.transform.parent = objectToFollow;
+            gameObject.transform.parent = objectToFollow.tranform;
             if(OnPickUp != null)
                 OnPickUp(gameObject);
         }
     }
     
-    void IsAbleToPickUp() {
+    bool IsAbleToPickUp() {
         if(CanPickUp == null)
             return true;
         
@@ -217,7 +194,6 @@ public class Player() {
     }
     
     void HandleOnPickUp(GameObject g) {
-        g.transform.parent = gameObject;
         HoldingObject = true;
     }
     
