@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ##Getting Started
 Before I start, I would be both a liar and a jerk if I said I learned about this topic on my own, and I had to read a lot of great articles on this topic. The best info out there for this topic was [Delegates, Events, and Singletons](http://www.indiedb.com/groups/unity-devs/tutorials/delegates-events-and-singletons-with-unity3d-c) posted by vicestudios.  The other great area is of course the actual [Unity Learn](http://unity3d.com/learn) section of the Unity site.  Watch these videos, they're really great and can teach you some really cool coding techniques.  For me, primarily coming from a JavaScript background, then transitioning to C#, an extra resource to just show you some common and well used patterns was really helpful!
 
