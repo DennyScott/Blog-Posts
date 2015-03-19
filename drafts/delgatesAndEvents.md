@@ -115,7 +115,7 @@ Now inside the PickUpObject method the OnPickUp event is actually called with th
 
 Next in our Player class, we go through all buckets that may be in the scene, get the PickUpObject component, and += a handler method in this class onto that event.  This is a delegate behavior that allows us to add numerous methods to this object.  So other classes could also have their own handler for when this event is triggered, and when the event is called, it will call event attached handler method.
 
-##Boolean Delegates and Events
+####Boolean Delegates and Events
 Oh, but there is a small problem though.  We no longer check to make sure that the player is not already holding a bucket!  Well we can fix that through events again, but this time a little different.  Where going to use a little boolean trickery in our event!
 
 ``` c#
@@ -171,7 +171,7 @@ public class Player() {
 
 Now we have a delegate that returns a boolean value, and an event built from it.   Based on the flow we have, an item can only be picked up if CanPick has not been subscribed to by any handlers, or if the subscription method returns true.  Now this probably seems like a very strange mix as true and null usually don't mix, but its to protect script independence.  Basically this script will now always work when dropped on an object, unless another class adds some rules to it.  So in essence, a bucket can always be picked up, but if we want the functionality that it can only be picked up when another bucket is not already in the players possession, we add that functionality through an event call, maintaining script independence.
 
-##Using the Invocation list
+####Using the Invocation list
 This event when called currently will call all attached scripts and return the value of the last one.  Then in our Player class we subscribe a handle function that return true if the bucket can be picked up. This works perfectly for a one attached handler script, but anymore and it will fail.  So we're going to do a neat little trick with it using the Invocation list.  Now you may think of other cool ways to use this, but I find this type of algorithm only really works with boolean value methods.  So lets code it quickly now.
 
 ``` c#
@@ -231,6 +231,7 @@ public class Player() {
 ```
 
 So we moved our CanPickUp into a separate method and now use the GetInvocationList to cycle through each event handler subscribed.  If any of them are false, we return false, if not we return true.  So in essence we have made a gigantic extend-able OR statement with methods, but cleaned it up to be super simple.  Now we have our functionality complete, our PickUpObject script is independent but has the hooks needed to control some of the logic if needed by an outside source thus maintaining code independence.
+___
 
 ##Drawbacks
 There is one large draw back with this style of coding though, which is debugging.  Now, don't run for the hills in terror, its not really tough, it just requires a little more work to manage your code.  The reason this is tough for debugging is that you have to now work backwards through your code to debug.  Before, you could just go to bucket, see that its calling Player, and go straight to the Player class.  Well now, your going to go the the PickUpObject class, and then wonder what class is subscribing to this method that is not allowing it to be picked up.  Of course, you could simply select the event, right click, and find its usages, but this may not be optimal for you which I totally understand.  I love using delegates and events like this as it allows me to jut drop scripts on and start enforcing rules, but if it feels a little to tough to manage, don't throw them out, just keep them in your pocket as a tool to use if the problem needed them arises.  
