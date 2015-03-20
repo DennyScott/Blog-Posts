@@ -101,12 +101,12 @@ public class PickUpObject() : MonoBehaviour {
 ```
 ___
 
-##Creating Delegates and Events
+#Creating The Delegates and Events
 Okay well thats a start, but our PickUpObject script is still very coupled with the Player class, and contextually it doesn't make sense.  If this script is simply to just to pick up objects, why does it adjust an attribute in the Player class?  Now one class will generally always be coupled in some manner, unless you use something more complicated like a Pub-Sub adapter to manage messages, and it seems that our player class is acting as more of a manager here, so it will be the one that we will load with the coupling logic.  
 
 When constructing these scripts, I tend to want scripts such as PickUpObject to be "Plug and Play" on any object I drop it on, meaning I don't have to code whole aspects again.  This is going to be a building process, so let's re-factor this code and add some simple void delegates and events.
 
-####Void Delegates and Events
+##Void Delegates and Events
 The first type of delegate I'm going to be showing the the void type delegate.  This means I'm going to make a method signature that returns a type of void, and then I can create other methods that are of that delegate type, ensuring that I return void.  I also must pass the same parameters as the delegate, so in the case coming up, this means whenever the event is called it must also pass a GameObject as an argument.
 
 ####PickUpObject.cs
@@ -184,7 +184,7 @@ Now inside the PickUpObject method the OnPickUp event is actually called with th
 
 Next in our Player class, we go through all buckets that may be in the scene, get the PickUpObject component, and += a handler method in this class onto that event.  This is a delegate behavior that allows us to add numerous methods to this object.  So other classes could also have their own handler for when this event is triggered, and when the event is called, it will call event attached handler method.
 
-####Boolean Delegates and Events
+##Boolean Delegates and Events
 Oh, but there is a small problem though.  We no longer check to make sure that the player is not already holding a bucket!  Well we can fix that through events again, but this time a little different.  Were going to use a little boolean trickery in our event!
 
 ####PickUpObject.cs
@@ -274,7 +274,7 @@ public class Other : MonoBehaviour {
 
 Now we have a delegate that returns a boolean value, and an event built from it.   Based on the flow we have, an item can only be picked up if CanPick has not been subscribed to by any handlers, or if the subscription method returns true.  Now this probably seems like a very strange mix as true and null usually don't mix, but its to protect script independence.  Basically this script will now always work when dropped on an object, unless another class adds some rules to it.  So in essence, a bucket can always be picked up, but if we want the functionality that it can only be picked up when another bucket is not already in the players possession, we add that functionality through an event call, maintaining script independence.
 
-####Using the Invocation list
+##Using the Invocation list
 This event, when called, will call all attached scripts and return the value of the last one.  Then in our Player class we subscribe a handle function that return true if the bucket can be picked up. This works perfectly for a one attached handler script, but anymore and it will fail.  So we're going to do a neat little trick with it using the Invocation list.  Now you may think of other cool ways to use this, but I find this type of algorithm only really works with boolean value methods.  So lets code it quickly now.
 
 ####PickUpObject.cs
@@ -378,10 +378,10 @@ public class Other : MonoBehaviour {
 So we moved our CanPickUp into a separate method and now use the GetInvocationList to cycle through each event handler subscribed.  If any of them are false, we return false, if not we return true.  So in essence we have made a gigantic extend-able OR statement with methods, but cleaned it up to be super simple.  Now we have our functionality complete, our PickUpObject script is independent but has the hooks needed to control some of the logic if needed by an outside source thus maintaining code independence.
 ___
 
-##Spicing it up with some Syntactical Sugar
+#Spicing it up with some Syntactical Sugar
 After receiving some feedback for this article, the common feeling was that instead of using custom defined delegates, we should be using Action delegate and the Func delegate.  These are 2 delegates that are already included in the system that can do the same job as the custom delegates we have been using.  These simply remove the line needed for creating the custom delegate, and nothing more, so don't feel nervous if you don't quite understand what they are.  These are the exact same thing we were already declaring, but now remove the line needed for creating the delegate, as C# already has these delegates created in the System.  Now be warned that while this lowers your lines of code needed by one, it may also reduce the readability of some sections of code, especially if there are a large amount of parameters in your delegate.  It can also make type checking a little more complicated if needed, but that being said we don't really have either of this problem in our code, so lets throw it in!
 
-####Action
+##Action
 When we declare the Action delegate, it is the same thing as our TriggerEvent delegate but allows us to not have to create a custom delegate.  Actions can have numerous parameters just like when we create a delegate, but automatically have a void return value.  This will slightly clean up our code, with the exact same results, so lets go ahead and change that up!
 
 ####PickUpObject.cs
@@ -420,7 +420,7 @@ public class PickUpObject : MonoBehaviour {
 
 This code switch will change nothing with our other classes so we can just leave them as is, but allows us to remove the custom delegate we created at the top of this script.  Note that I also added the using System.Actions at the top.  If you didn't want to add this, you could just say System.Action in place of just Action, as I know it is a fairly common word to use.
 
-####Func
+##Func
 Alright, the second piece to the puzzle, the Func we will declare will act like our IsAcceptable delegate, but this delegate is more expendable then what we use it for.  Basically, if you want to create a delegate that returns a value you can use Func to declare that delegate rather then make a custom delegate, you can just use the Func delegate.  Just like I stated before, remember if your looking for clarity on code a custom delegate may be more reasonable for you, as well if you use type checking on your delegates.  In our case, the only thing it kind of messes up a bit is the readability of the Invocation list, but only a bit, so we should be fine.
 
 ####PickUpObject.cs
@@ -458,7 +458,7 @@ public class PickUpObject : MonoBehaviour {
 
 So really not much has changed here, we removed the custom delegate, and added in our Func call.  The way these work is that the first generic parameter is argument, and you can add a bunch of these, followed by a final argument which will be the return value of the delegate.  Remember, it will always be the final argument in this that will be the return value of the delegate.  In our case, the bool is the return value of the CanPickUp method, so we list it at the end.  Now our InvocationList line has changed a bit, with the IsAcceptable delegate being removed, we need to cast the method into the correct type, which in this case is the Func delegate with a game object argument first, and a return value of bool.  Now any more parameters and this could get kind of messy looking, and tough to sometimes figure out whats calling what.  Its all a matter of preference, so just know going in which you want to choose.
 
-##Unregistering your Events
+#Unregistering your Events
 So one of the largest drawbacks that can happen with events is that if they are not properly managed, they can cause memory leaks.  I think we all know that memory leaks are very bad, so lets fix that up now.  Really all you need to fix this up is to unregister these events when were done with them.  In fact, whenever you register an event, you should also include a section to unregister it immediately to make sure you don't fall into that trap.  
 
 ##Unregister on Subscribers
@@ -562,7 +562,7 @@ public class Other : MonoBehaviour {
 }
 ```
 
-####Unregister the Subscribed
+##Unregister the Subscribed
 This one is a little different, and technically not needed, but safety first so lets remove the event listener on the subscribed class on disable.  This means that when the Bucket is disabled, we want to reset the event and loose our invocation list, which is done by simply giving it the value of null.
 
 ####PickUpObject.cs
@@ -605,7 +605,7 @@ public class PickUpObject : MonoBehaviour {
 This pretty well wraps up the code for this.  Just remember when looking over these finalized classes, these still have code that is not ideal.  In particular, we should not be using the FindWithTag function on every call we should be trying to minimize searching for items.  We only need this for the initializing phase, and then the events we have created will handle and messages between classes, so there is multiple ways to actually initialize this.  I'm not going to get this in this article, but cycling through each bucket using tag is not ideal, especially because we're replicating this command separately on each class.  A list stored somewhere would probably be the most ideal solution that the other classes can call to to get the buckets.
 ___
 
-##Drawbacks
+#Drawbacks And Conclusions
 There is one large draw back with this style of coding though, which is debugging.  Now, don't run for the hills in terror, its not really tough, it just requires a little more work to manage your code.  The reason this is tough for debugging is that you have to now work backwards through your code to debug.  Before, you could just go to bucket, see that its calling Player, and go straight to the Player class.  Well now, your going to go the the PickUpObject class, and then wonder what class is subscribing to this method that is not allowing it to be picked up. 
 
 Of course, you could simply select the event, right click, and find its usages, but this may not be optimal for you which I totally understand.  I love using delegates and events like this as it allows me to jut drop scripts on and start enforcing rules, but if it feels a little to tough to manage, don't throw them out, just keep them in your pocket as a tool to use if the problem needed them arises.  
