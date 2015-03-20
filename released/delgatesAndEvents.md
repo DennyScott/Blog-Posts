@@ -1,12 +1,12 @@
-##Getting Started
 Before I start, I would be both a liar and a jerk if I said I learned about this topic on my own, and I had to read a lot of great articles on this topic. The best info out there for this topic was [Delegates, Events, and Singletons](http://www.indiedb.com/groups/unity-devs/tutorials/delegates-events-and-singletons-with-unity3d-c) posted by vicestudios.  The other great area is of course the actual [Unity Learn](http://unity3d.com/learn) section of the Unity site.  Watch these videos, they're really great and can teach you some really cool coding techniques.  For me, primarily coming from a JavaScript background, then transitioning to C#, an extra resource to just show you some common and well used patterns was really helpful!
 
-##Disclaimer
+#Getting Started
 As a warning to those reading this article, I will be using some less then ideal calls in my code.  As stated later in the article, I am only using them for simplicity of reading to the viewer to know what objects I'm using.  I understand they are not the greatest method for actually referencing objects in the hierarchy, but as this article does not focus on efficiency of hierarchy calls, I left them in for simplicity.
 
-####Basic Script Interaction
+##Basic Script Interaction
 So first lets show how you may normally interact between two scripts in Unity.
 
+####Bucket.cs
 ``` c#
 using UnityEngine;
 using System.Collections;
@@ -25,7 +25,7 @@ public class Bucket() : MonoBehaviour {
         otherObj = someGameObject.GetComponent<Other>();
     }
     
-    public void PickUpBucket(GameObject objectToFollow) {
+    public void PickUp(GameObject objectToFollow) {
         if(!playerObj.HoldingBucket) {
             playerObj.HoldingBucket = true;
             gameObject.transform.parent = objectToFollow.transform;
@@ -35,6 +35,7 @@ public class Bucket() : MonoBehaviour {
 }
 ```
 
+####Player.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -44,7 +45,10 @@ public class Player() : MonoBehaviour {
     
     public bool HoldingObject {get; set;}
 }
+```
 
+####Other.cs
+``` C#
 using UnityEngine;
 using System.Collections;
 public class Other : MonoBehaviour {
@@ -59,11 +63,12 @@ public class Other : MonoBehaviour {
 ```
 *Note: We are only demonstrating a public api to pick up the object, an external manager or button press would call this api."*
 
-####Separating Scripts
+##Separating Scripts
 Now, in a real program I would likely recommend using enums to handle a state change like this, but this is just a simple example to show interacting between two scripts.  The Bucket script would be attached to a bucket object, and the player class attached to a player object. Now the goal of this exercise is to create re-usable code, and both of these classes are pretty specific to our game, so lets break down the Bucket class into a new class that may be a little more usable.
 
 I should warn you, as you go through this your code will indeed become larger, so if you're all about the shortest code, please don't show up at my house with pitch forks and torches.
 
+####PickUpObject.cs
 ``` c#
 using UnityEngine;
 using System.Collections;
@@ -82,7 +87,7 @@ public class PickUpObject() : MonoBehaviour {
         otherObj = someGameObject.GetComponent<Other>();
     }
     
-    public void PickUpObject(GameObject objectToFollow) {
+    public void PickUp(GameObject objectToFollow) {
         if(!obj.HoldingBucket) {
             obj.HoldingBucket = true;
             gameObject.transform.parent = objectToFollow.transform;
@@ -104,6 +109,7 @@ When constructing these scripts, I tend to want scripts such as PickUpObject to 
 ####Void Delegates and Events
 The first type of delegate I'm going to be showing the the void type delegate.  This means I'm going to make a method signature that returns a type of void, and then I can create other methods that are of that delegate type, ensuring that I return void.  I also must pass the same parameters as the delegate, so in the case coming up, this means whenever the event is called it must also pass a GameObject as an argument.
 
+####PickUpObject.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -112,13 +118,15 @@ public class PickUpObject() : MonoBehaviour {
     public delegate void TriggerEvent(GameObject g);
     public event TriggerEvent OnPickUp;
     
-    public void PickUpObject(GameObject objectToFollow) {
+    public void PickUp(GameObject objectToFollow) {
         gameObject.transform.parent = objectToFollow.transform;
         if(OnPickUp != null)
             OnPickUp(gameObject);
     }
 }
 ```
+
+####Player.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -141,6 +149,8 @@ public class Player() : MonoBehaviour {
     public bool HoldingObject {get; set;}
 }
 ```
+
+####Other.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -177,8 +187,8 @@ Next in our Player class, we go through all buckets that may be in the scene, ge
 ####Boolean Delegates and Events
 Oh, but there is a small problem though.  We no longer check to make sure that the player is not already holding a bucket!  Well we can fix that through events again, but this time a little different.  Were going to use a little boolean trickery in our event!
 
+####PickUpObject.cs
 ``` c#
-
 using UnityEngine;
 using System.Collections;
 
@@ -189,7 +199,7 @@ public class PickUpObject() : MonoBehaviour {
     public delegate bool IsAcceptable(Gameobject g);
     public event IsAcceptable CanPickUp;
     
-    public void PickUpObject(GameObject objectToFollow) {
+    public void PickUp(GameObject objectToFollow) {
         if(CanPickUp == null || CanPickUp()) {
             gameObject.transform.parent = objectToFollow.transform;
             if(OnPickUp != null)
@@ -198,6 +208,8 @@ public class PickUpObject() : MonoBehaviour {
     }
 }
 ```
+
+####Player.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -226,6 +238,8 @@ public class Player() : MonoBehaviour {
     public bool HoldingObject {get; set;}
 }
 ```
+
+####Other.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -263,6 +277,7 @@ Now we have a delegate that returns a boolean value, and an event built from it.
 ####Using the Invocation list
 This event, when called, will call all attached scripts and return the value of the last one.  Then in our Player class we subscribe a handle function that return true if the bucket can be picked up. This works perfectly for a one attached handler script, but anymore and it will fail.  So we're going to do a neat little trick with it using the Invocation list.  Now you may think of other cool ways to use this, but I find this type of algorithm only really works with boolean value methods.  So lets code it quickly now.
 
+####PickUpObject.cs
 ``` c#
 using UnityEngine;
 using System.Collections;
@@ -295,6 +310,8 @@ public class PickUpObject() : MonoBehaviour {
     }
 }
 ```
+
+####Player.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -324,6 +341,8 @@ public class Player() : MonoBehaviour {
     public bool HoldingObject {get; set;}
 }
 ```
+
+####Other.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -365,6 +384,7 @@ After receiving some feedback for this article, the common feeling was that inst
 ####Action
 When we declare the Action delegate, it is the same thing as our TriggerEvent delegate but allows us to not have to create a custom delegate.  Actions can have numerous parameters just like when we create a delegate, but automatically have a void return value.  This will slightly clean up our code, with the exact same results, so lets go ahead and change that up!
 
+####PickUpObject.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -403,6 +423,7 @@ This code switch will change nothing with our other classes so we can just leave
 ####Func
 Alright, the second piece to the puzzle, the Func we will declare will act like our IsAcceptable delegate, but this delegate is more expendable then what we use it for.  Basically, if you want to create a delegate that returns a value you can use Func to declare that delegate rather then make a custom delegate, you can just use the Func delegate.  Just like I stated before, remember if your looking for clarity on code a custom delegate may be more reasonable for you, as well if you use type checking on your delegates.  In our case, the only thing it kind of messes up a bit is the readability of the Invocation list, but only a bit, so we should be fine.
 
+####PickUpObject.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -443,6 +464,7 @@ So one of the largest drawbacks that can happen with events is that if they are 
 ##Unregister on Subscribers
 I'm actually going to move our event subscriptions to an OnEnable method in case our objects can be enabled and disabled (or simply destroyed), as well as add in an unregister (i.e. -=) first just in case our Buckets have already been registered once.  If they haven't, this will fail silently and keep going, which is perfect for us.  Also on the OnDisable, we simply unregister the handlers we used.  This works as simply as it looks, and will remove itself from the invocation list for when the event is called.
 
+####Player.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
@@ -498,6 +520,8 @@ public class Player : MonoBehaviour {
     public bool HoldingObject {get; set;}
 }
 ```
+
+####Other.cs
 ``` C#
 public class Other : MonoBehaviour {
     int waterLevel = 0;
@@ -541,6 +565,7 @@ public class Other : MonoBehaviour {
 ####Unregister the Subscribed
 This one is a little different, and technically not needed, but safety first so lets remove the event listener on the subscribed class on disable.  This means that when the Bucket is disabled, we want to reset the event and loose our invocation list, which is done by simply giving it the value of null.
 
+####PickUpObject.cs
 ``` C#
 using UnityEngine;
 using System.Collections;
