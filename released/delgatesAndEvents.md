@@ -601,6 +601,8 @@ public class PickUpObject : MonoBehaviour {
     }
 }
 ```
+
+This pretty well wraps up the code for this.  Just remember when looking over these finalized classes, these still have code that is not ideal.  In particular, we should not be using the FindWithTag function on every call we should be trying to minimize searching for items.  We only need this for the initializing phase, and then the events we have created will handle and messages between classes, so there is multiple ways to actually initialize this.  I'm not going to get this in this article, but cycling through each bucket using tag is not ideal, especially because we're replicating this command separately on each class.  A list stored somewhere would probably be the most ideal solution that the other classes can call to to get the buckets.
 ___
 
 ##Drawbacks
